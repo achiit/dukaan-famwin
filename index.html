@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#202b68"><title>FamWin — Free Color Game Demo</title>
+<style>
+:root{--bg:#18265f;--panel:#283873;--blue:#2695f5;--text:#f5f7ff;--muted:#b9c6e8;--green:#19b96b;--red:#e53e4e;--violet:#9a45dc}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px Arial,sans-serif}.top{background:#2b3675;padding:15px;display:flex;justify-content:space-between;position:sticky;top:0}.logo{font-size:1.6rem;font-weight:900;font-style:italic}.logo span{color:#32d9ff}.wrap{max-width:850px;margin:auto;padding:14px 14px 90px}.notice{background:#fff0cc;color:#583e10;padding:12px;border-radius:10px;font-size:.85rem}.games{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.game{border-radius:13px;min-height:140px;padding:13px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(140deg,#b81748,#f04c64)}.game:nth-child(2){background:linear-gradient(140deg,#e96820,#a91c25)}.game:nth-child(3){background:linear-gradient(140deg,#273248,#72522b)}.game:nth-child(4){background:linear-gradient(140deg,#6739d9,#0d205f)}.game:nth-child(5){background:linear-gradient(140deg,#1567d9,#21a7ec)}.game:nth-child(6){background:linear-gradient(140deg,#7a2dc0,#29216c)}.emoji{font-size:2.5rem}.game h3{margin:8px 0 2px}.game p{margin:0;font-size:.75rem}.panel{background:var(--panel);padding:16px;border-radius:15px;margin-top:15px}.head{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.points{background:#19275e;padding:8px 12px;border-radius:8px;color:#7fc1ff}.target{text-align:center;background:#1b2a63;padding:16px;border-radius:10px;margin-top:14px}.target strong{display:block;font-size:2rem;margin-top:5px}.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.choices button,.primary{padding:13px 6px;border:0;border-radius:9px;color:white;font-weight:bold}.green{background:var(--green)}.red{background:var(--red)}.violet{background:var(--violet)}.primary{background:var(--blue);width:100%;cursor:pointer}.result{padding:12px;background:#1b2a63;border-radius:9px;margin:10px 0}.history{width:100%;border-collapse:collapse;font-size:.85rem}.history td,.history th{text-align:left;padding:10px 5px;border-bottom:1px solid #ffffff20}.history th{color:#b9d1ff}.page{display:none}.page.active{display:block}.bottom{position:fixed;bottom:0;left:0;right:0;background:#101d4c;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 4px max(8px,env(safe-area-inset-bottom))}.bottom button{border:0;background:none;color:#aab9e4;padding:7px 2px}.bottom button.active{color:#65b8ff}.bottom span{display:block;font-size:1.2rem}input{width:100%;padding:12px;border-radius:8px;border:1px solid #5265a0;background:#1b2a63;color:white;margin:8px 0}footer{text-align:center;color:#9eafd9;font-size:.75rem;padding:24px 0}@media(max-width:390px){.games{gap:7px}.game{padding:9px;min-height:125px}.game h3{font-size:.9rem}.emoji{font-size:2rem}}
+</style></head>
+<body>
+<header class="top"><div class="logo"><span>7</span> FamWin</div><div>🪙 <b id="topPts">1000</b> pts</div></header>
+<main class="wrap">
+<div class="notice"><b>FREE DEMO ONLY:</b> Casual color practice with points that have no cash value. No deposits, payment QR, betting, withdrawals or cash prizes.</div>
+<section class="page active" id="home">
+<div class="games">
+<div class="game"><div class="emoji">🎨</div><div><h3>Color Match</h3><p>Free practice game</p></div></div>
+<div class="game"><div class="emoji">🐣</div><div><h3>Memory Match</h3><p>Remember patterns</p></div></div>
+<div class="game"><div class="emoji">🧠</div><div><h3>Quick Quiz</h3><p>Test your reflexes</p></div></div>
+<div class="game"><div class="emoji">🌀</div><div><h3>Color Wheel</h3><p>Match the target</p></div></div>
+<div class="game"><div class="emoji">🔷</div><div><h3>Shape Finder</h3><p>Find matching shapes</p></div></div>
+<div class="game"><div class="emoji">🌈</div><div><h3>Rainbow Run</h3><p>Casual score challenge</p></div></div>
+</div>
+<div class="panel"><div class="head"><h3>🎨 Color Match Challenge</h3><div class="points">Free points: <b id="pts">1000</b></div></div>
+<p style="color:var(--muted);font-size:.9rem">Choose the target color. Correct answers earn 10 demo points; wrong answers lose nothing.</p>
+<div class="target">TARGET COLOR<strong id="target">GREEN</strong></div>
+<div class="choices"><button class="green" onclick="answer('GREEN')">Green</button><button class="violet" onclick="answer('VIOLET')">Violet</button><button class="red" onclick="answer('RED')">Red</button></div>
+<div class="result" id="result" aria-live="polite">Tap a color to play a free practice round.</div><button class="primary" onclick="nextRound()">Next Round</button>
+</div>
+<div class="panel"><h3>Recent Practice Results</h3><table class="history"><thead><tr><th>Round</th><th>Target</th><th>Answer</th><th>Result</th></tr></thead><tbody id="hist"><tr><td colspan="4">Your results will appear here.</td></tr></tbody></table></div>
+</section>
+<section class="page" id="activity"><div class="panel"><h3>🗂 Activity</h3><p>Recent practice rounds:</p><table class="history"><tbody id="hist2"><tr><td>Play a round to see results.</td></tr></tbody></table></div></section>
+<section class="page" id="challenge"><div class="panel"><h3>🌟 Free Daily Challenge</h3><p>Practice color recognition and attention. No cash prizes or money features.</p><button class="primary" onclick="page('home','nHome')">Play Color Match</button></div></section>
+<section class="page" id="account"><div class="panel"><h3>👤 Demo Account</h3><p>Demo points</p><h2><span id="accountPts">1000</span> pts</h2><p style="color:var(--muted)">Points cannot be transferred or redeemed. This sample does not create accounts or store personal information.</p><label>Optional nickname</label><input id="nick" maxlength="20" placeholder="Your nickname"><button class="primary" onclick="saveNick()">Save nickname on this page</button><div class="result" id="nickResult">FamWin demo</div></div></section>
+<footer>FamWin · Free casual game prototype · No real-money play</footer></main>
+<nav class="bottom"><button class="active" id="nHome" onclick="page('home','nHome')"><span>⌂</span>Home</button><button id="nActivity" onclick="page('activity','nActivity')"><span>▤</span>Activity</button><button id="nChallenge" onclick="page('challenge','nChallenge')"><span>✦</span>Challenge</button><button id="nAccount" onclick="page('account','nAccount')"><span>◉</span>Account</button></nav>
+<script>
+let pts=1000,round=1,target='GREEN',done=false,records=[];const cs=['GREEN','VIOLET','RED'];
+function sync(){['topPts','pts','accountPts'].forEach(id=>document.getElementById(id).textContent=pts)}
+function answer(c){if(done){document.getElementById('result').textContent='Round complete — tap Next Round.';return}done=true;let ok=c===target;if(ok)pts+=10;sync();document.getElementById('result').textContent=ok?'Correct! +10 free demo points.':'Not quite — no points lost.';records.unshift({round,target,choice:c,ok});render()}
+function nextRound(){round++;target=cs[Math.floor(Math.random()*cs.length)];done=false;document.getElementById('target').textContent=target;document.getElementById('result').textContent='Choose the target color to earn free demo points.'}
+function render(){let h=records.slice(0,8).map(r=>`<tr><td>${r.round}</td><td>${r.target}</td><td>${r.choice}</td><td>${r.ok?'+10 pts':'Practice'}</td></tr>`).join('');document.getElementById('hist').innerHTML=h||'<tr><td colspan="4">No results yet.</td></tr>';document.getElementById('hist2').innerHTML=h||'<tr><td colspan="4">No results yet.</td></tr>'}
+function page(id,nav){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));document.getElementById(nav).classList.add('active');window.scrollTo(0,0)}
+function saveNick(){let n=document.getElementById('nick').value.trim();document.getElementById('nickResult').textContent=n?'Nickname for this page: '+n+'. No account was created.':'No nickname entered. This is a demo only.'}
+sync();
+</script></body></html>
